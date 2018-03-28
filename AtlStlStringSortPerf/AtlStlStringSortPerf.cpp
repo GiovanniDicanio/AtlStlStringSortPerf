@@ -10,7 +10,7 @@
 
 // Define the following macro to enable custom std::wstring comparison 
 // using wcscmp(), instead of the default wmemcmp()
-#define TEST_STL_WCSCMP_COMPARE
+//#define TEST_STL_WCSCMP_COMPARE
 
 
 //=============================================================================
