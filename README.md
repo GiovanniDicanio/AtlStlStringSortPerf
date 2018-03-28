@@ -27,7 +27,7 @@ STL3: 3257.14 ms
 
 These shows that `CStringW` performs better than `wstring` in this context.
 
-I was curious _why_ sorting `std::wstring`s was slower than `CStringW`s, so I delved into the implementation code of both classes. Besides the ATL string's Copy-on-Write policy, another difference I noted was in the way strings are _compared_ (and comparing strings is a key operation when sorting a string vector). In particular, `CStringW` uses `wcscmp()` (see the implementation code of `ChTraitsCRT<wchar_t>::StringCompare()` in the `<cstringt.h>` header). On the other hand, `std::wstring` uses `wmemcmp()` (see `char_traits<wchar_t>::compare()` in `<iosfwd>`).
+I was curious _why_ sorting `std::wstring`s was slower than `CStringW`s, so I delved into the implementation code of both classes. Besides the ATL string's Copy-on-Write policy, another difference I noted was in the way strings are _compared_ (and comparing strings is a key operation when sorting a string vector). In particular, `CStringW` uses **`wcscmp()`** (see the implementation code of `ChTraitsCRT<wchar_t>::StringCompare()` in the `<cstringt.h>` header). On the other hand, `std::wstring` uses **`wmemcmp()`** (see `char_traits<wchar_t>::compare()` in `<iosfwd>`).
 
 Out of curiosity, I tried invoking `std::sort()` on the `vector<wstring>`, passing a custom comparison function that overrides the default `wstring` implementation and calls `wcscmp()` instead. You can enable that in [the benchmark code](../master/AtlStlStringSortPerf/AtlStlStringSortPerf.cpp) defining the **`TEST_STL_WCSCMP_COMPARE`** macro.  
 As a result of that, sorting `std::wstring`s _outperforms_ `ATL::CStringW`:
