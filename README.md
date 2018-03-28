@@ -1,5 +1,5 @@
 # AtlStlStringSortPerf
-Comparing string vector sorting using ATL::CStringW vs. std::wstring
+Comparing String Vector Sorting Using `ATL::CStringW` vs. `std::wstring`
 
 by Giovanni Dicanio
 
@@ -48,3 +48,7 @@ STL2: 2348.83 ms
 ATL3: 2889.57 ms
 STL3: 2308.84 ms
 ```
+
+### std::wstring Cannot Use wcscmp()
+Unfortunately, comparing `wstring` objects using `wcscmp()` is not totally correct. In fact, as Stephan T. Lavavej pointed out, `std::basic_string` supports _embedded nulls_, so `wstring` comparisons must use (the slower) `wmemcmp()`.
+
