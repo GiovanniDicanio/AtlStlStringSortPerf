@@ -49,6 +49,6 @@ ATL3: 2889.57 ms
 STL3: 2308.84 ms
 ```
 
-### std::wstring Cannot Use wcscmp()
-Unfortunately, comparing `wstring` objects using `wcscmp()` is not totally correct. In fact, as Stephan T. Lavavej pointed out, `std::basic_string` supports _embedded nulls_, so `wstring` comparisons must use (the slower) `wmemcmp()`.
-
+### Note on std::wstring, embedded nulls and wcscmp()
+Unfortunately, comparing `wstring` objects using `wcscmp()` is not totally correct. In fact, as Stephan T. Lavavej pointed out, `std::basic_string` supports _embedded nulls_, so `wstring` comparisons must use (the slower) `wmemcmp()`.  
+Anyway, if you are sure that your strings don't contain embedded nulls, a custom comparator that invokes `wcscmp()` on `wstring::c_str()` seems like an interesting and simple method to speed up sorting times.
